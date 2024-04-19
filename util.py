@@ -9,7 +9,8 @@ def check_username_password(username, password):
             host="127.0.0.1",
             port="5432"
         )
-
+        print(username)
+        print(password)
         cur = conn.cursor()
         cur.execute("SELECT PASSWORD FROM USERS WHERE USERID = %s", (username,))
         row = cur.fetchone()  

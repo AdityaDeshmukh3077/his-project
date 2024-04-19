@@ -10,7 +10,7 @@
 
     <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/sign-in/">
     <!-- Bootstrap core CSS -->
-    <link href="../templates/assets/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='bootstrap.min.css') }}" rel="stylesheet">
 
     <style>
       .bd-placeholder-img {
@@ -24,7 +24,7 @@
         font-weight: bold;
         }
     </style>
-    <link href="../templates/css/medicalforms1.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='medicalforms1.css') }}" rel="stylesheet">
   </head>
   <body class="form-medical-details-1">
   <div style="overflow-y: auto; overflow-x: hidden;"> 
