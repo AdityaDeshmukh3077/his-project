@@ -28,6 +28,8 @@ def patient_details():
               'patientVegetable','patientHvyAlcCon','patientNoDocBcCost','patientDiffWalk','patientGenHealth','patientPhHealth',
               'patientMentalHealth']:
         patient_data[field] = request.form.get(field)
+    
+    processed_data = util.process_data(patient_data)
 
     print(patient_data)
     return render_template('index.html')

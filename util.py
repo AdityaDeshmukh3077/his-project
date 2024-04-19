@@ -23,3 +23,19 @@ def check_username_password(username, password):
     finally:
         if conn:
             conn.close()
+
+
+def process_data(patient_data):
+    process_patient_data = {}
+
+    # ['patientFirstname', 'patientLastname', 'patientAge', 'patientGender',
+    #           'patientEducation', 'patientIncome', 'patientHealthcare', 'patientHeight',
+    #           'patientWeight', 'patientSystolicBP', 'patientDiastolicBP', 'patientCholesterol',
+    #           'patientCholCheck', 'patientSmoker', 'patientStroke','patientHeartDisease','patientPhysHealth', 'patientFruits',
+    #           'patientVegetable','patientHvyAlcCon','patientNoDocBcCost','patientDiffWalk','patientGenHealth','patientPhHealth',
+    #           'patientMentalHealth']
+
+    for key,value in patient_data.items():
+        process_patient_data['patientAge'] = int(patient_data['patientAge'])
+
+    return process_patient_data
