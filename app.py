@@ -13,6 +13,11 @@ def home_page():
         if util.check_username_password(username, password):
             return render_template('forms1.html')
         else:
-            print("Hello World")
+            message = "Invalid username or password"
+            return render_template('index.html', message=message)
     else:
         return render_template('index.html')
+    
+@app.route('/analysis', methods=['POST'])
+def patient_details():
+    return render_template('index.html')
