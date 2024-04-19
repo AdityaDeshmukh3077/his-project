@@ -1,5 +1,6 @@
 import psycopg2
 import pandas as pd
+import joblib
 
 def check_username_password(username, password):
     try:
@@ -33,11 +34,10 @@ def process_data(patient_data):
             'patientMentalHealth']
     for item in list:
         process_patient_data[item] = int(patient_data[item])
-    process_patient_data['BMI'] = calculate_bmi(int(patient_data['patientWeight']),int(patient_data['patientHeight']))
-    process_patient_data['highchol'] = has_high_blood_pressure(int(patient_data['patientSystolicBP']),int(patient_data['patientDiastolicBP']))
+    process_patient_data['bmi'] = calculate_bmi(int(patient_data['patientWeight']),int(patient_data['patientHeight']))
+    process_patient_data['highbp'] = has_high_blood_pressure(int(patient_data['patientSystolicBP']),int(patient_data['patientDiastolicBP']))
     process_patient_data['cholcheck'] = has_high_cholesterol(int(patient_data['patientCholesterol']))
-
-
+    
     return process_patient_data
 
 def calculate_bmi(weight_kg, height_cm):
@@ -56,3 +56,23 @@ def has_high_cholesterol(total_cholesterol):
         return 1
     else:
         return 0
+    
+
+def get_predictions(processed_data):
+    clf_loaded = joblib.load('logistic_regression_model.joblib')
+    columns = ['age', 'anyhealthcare', 'bmi', 'cholcheck', 'diffwalk', 'education',
+       'fruitconsum', 'genhlth', 'heartdiseaseorattack', 'highbp', 'highchol',
+       'hvyalcoholconsum', 'income', 'menthlth', 'nodocbccost', 'physactivity',
+       'physhlth', 'sex', 'smoker', 'stroke', 'vegetableconsum']
+    
+    data = [processed_data['patientAge'], processed_data['patientHealthcare'], processed_data['bmi'], processed_data['patientCholCheck'],
+            processed_data['patientDiffWalk'], processed_data['patientEducation'],processed_data['patientFruits'],processed_data['patientGenHealth'],
+            processed_data['patientHeartDisease'], processed_data['highbp'], processed_data['cholcheck'], processed_data['patientHvyAlcCon'],
+            processed_data['patientIncome'], processed_data['patientMentalHealth'], processed_data['patientNoDocBcCost'], processed_data['patientPhysHealth'],
+            processed_data['patientPhHealth'],  processed_data['patientGender'], processed_data['patientSmoker'], processed_data['patientStroke'], processed_data['patientVegetable']     
+    ]
+
+    X_predict = pd.DataFrame([data], columns=columns)
+    predictions = clf_loaded.predict(X_predict)
+    print(predictions)
+    return predictions

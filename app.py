@@ -31,4 +31,5 @@ def patient_details():
     
     processed_data = util.process_data(patient_data)
     print(processed_data)
+    predicted_outcome = util.get_predictions(processed_data)
     return render_template('index.html')
