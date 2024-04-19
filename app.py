@@ -20,4 +20,14 @@ def home_page():
     
 @app.route('/analysis', methods=['POST'])
 def patient_details():
+    patient_data = {}
+    for field in ['patientFirstname', 'patientLastname', 'patientAge', 'patientGender',
+              'patientEducation', 'patientIncome', 'patientHealthcare', 'patientHeight',
+              'patientWeight', 'patientSystolicBP', 'patientDiastolicBP', 'patientCholesterol',
+              'patientCholCheck', 'patientSmoker', 'patientStroke','patientHeartDisease','patientPhysHealth', 'patientFruits',
+              'patientVegetable','patientHvyAlcCon','patientNoDocBcCost','patientDiffWalk','patientGenHealth','patientPhHealth',
+              'patientMentalHealth']:
+        patient_data[field] = request.form.get(field)
+
+    print(patient_data)
     return render_template('index.html')
