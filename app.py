@@ -1,7 +1,10 @@
-from flask import Flask, render_template
-app = Flask(__name__)
+from flask import Flask, render_template, request
+app = Flask(__name__, static_url_path='/static')
 
-@app.route('/')
-@app.route('/login')
+@app.route('/', methods=['GET'])
+@app.route('/login', methods=['POST'])
 def home_page():
-    return render_template('index.html')
+    if request.method == 'POST':
+        print("Hello World!")
+    else:
+        return render_template('index.html')
