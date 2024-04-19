@@ -74,5 +74,8 @@ def get_predictions(processed_data):
 
     X_predict = pd.DataFrame([data], columns=columns)
     predictions = clf_loaded.predict(X_predict)
-    print(predictions)
-    return predictions
+    if  predictions == [2]:
+        result = "Patient is at risk of diabetes."
+    else:
+        result = "Patient is not at risk of diabetes."
+    return result
