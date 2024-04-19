@@ -27,15 +27,32 @@ def check_username_password(username, password):
 
 def process_data(patient_data):
     process_patient_data = {}
+    list = ['patientAge', 'patientGender','patientEducation', 'patientIncome', 'patientHealthcare','patientCholCheck', 
+            'patientSmoker', 'patientStroke','patientHeartDisease','patientPhysHealth', 'patientFruits',
+            'patientVegetable','patientHvyAlcCon','patientNoDocBcCost','patientDiffWalk','patientGenHealth','patientPhHealth',
+            'patientMentalHealth']
+    for item in list:
+        process_patient_data[item] = int(patient_data[item])
+    process_patient_data['BMI'] = calculate_bmi(int(patient_data['patientWeight']),int(patient_data['patientHeight']))
+    process_patient_data['highchol'] = has_high_blood_pressure(int(patient_data['patientSystolicBP']),int(patient_data['patientDiastolicBP']))
+    process_patient_data['cholcheck'] = has_high_cholesterol(int(patient_data['patientCholesterol']))
 
-    # ['patientFirstname', 'patientLastname', 'patientAge', 'patientGender',
-    #           'patientEducation', 'patientIncome', 'patientHealthcare', 'patientHeight',
-    #           'patientWeight', 'patientSystolicBP', 'patientDiastolicBP', 'patientCholesterol',
-    #           'patientCholCheck', 'patientSmoker', 'patientStroke','patientHeartDisease','patientPhysHealth', 'patientFruits',
-    #           'patientVegetable','patientHvyAlcCon','patientNoDocBcCost','patientDiffWalk','patientGenHealth','patientPhHealth',
-    #           'patientMentalHealth']
-
-    for key,value in patient_data.items():
-        process_patient_data['patientAge'] = int(patient_data['patientAge'])
 
     return process_patient_data
+
+def calculate_bmi(weight_kg, height_cm):
+    height_m = height_cm / 100
+    bmi = weight_kg / (height_m ** 2)
+    return bmi
+
+def has_high_blood_pressure(systolic_bp, diastolic_bp):
+    if systolic_bp >= 130 or diastolic_bp >= 80:
+        return 1
+    else:
+        return 0
+    
+def has_high_cholesterol(total_cholesterol):
+    if total_cholesterol >= 200:
+        return 1
+    else:
+        return 0

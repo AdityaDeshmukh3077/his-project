@@ -30,6 +30,5 @@ def patient_details():
         patient_data[field] = request.form.get(field)
     
     processed_data = util.process_data(patient_data)
-
-    print(patient_data)
+    print(processed_data)
     return render_template('index.html')
