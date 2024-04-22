@@ -1,6 +1,10 @@
 import psycopg2
 import pandas as pd
 import joblib
+from sklearn.preprocessing import StandardScaler
+from alibi.explainers import AnchorTabular
+import numpy as np
+import matplotlib.pyplot as plt
 
 def check_username_password(username, password):
     try:
@@ -59,7 +63,7 @@ def has_high_cholesterol(total_cholesterol):
     
 
 def get_predictions(processed_data):
-    clf_loaded = joblib.load('logistic_regression_model.joblib')
+    model_loaded = joblib.load('trained_model.joblib')
     columns = ['age', 'anyhealthcare', 'bmi', 'cholcheck', 'diffwalk', 'education',
        'fruitconsum', 'genhlth', 'heartdiseaseorattack', 'highbp', 'highchol',
        'hvyalcoholconsum', 'income', 'menthlth', 'nodocbccost', 'physactivity',
@@ -73,7 +77,7 @@ def get_predictions(processed_data):
     ]
 
     X_predict = pd.DataFrame([data], columns=columns)
-    predictions = clf_loaded.predict(X_predict)
+    predictions = model_loaded.predict(X_predict)
     if  predictions == [2]:
         result = "Patient is at risk of diabetes."
     else:
